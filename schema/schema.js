@@ -16,6 +16,14 @@ const users = [
   id: '47', firstName: 'Samantha', age: 21
 }];
 
+const companies = [
+{
+  id: '23', name: 'Bill'
+},
+{
+  id: '47', name: 'Samantha'
+}];
+
 const UserType = new GraphQLObjectType({
   name: 'User',
   fields: {
@@ -31,6 +39,18 @@ const UserType = new GraphQLObjectType({
   }
 });
 
+const CompanyType = new GraphQLObjectType({
+  name: 'Company',
+  fields: {
+    id: {
+      type: GraphQLString
+    },
+    name: {
+      type: GraphQLString
+    }
+  }
+});
+
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
@@ -39,6 +59,13 @@ const RootQuery = new GraphQLObjectType({
       args: { id: { type: GraphQLString } },
       resolve(parentValue, args) {
         return _.find(users, { id: args.id });
+      }
+    },
+    company: {
+      type: CompanyType,
+      args: { id: { type: GraphQLString } },
+      resolve(parentValue, args) {
+        return _.find(companies, { id: args.id })
       }
     }
   }
